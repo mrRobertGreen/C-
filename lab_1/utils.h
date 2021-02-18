@@ -24,3 +24,4 @@ int listItemsSum(listptr head);
 int countOfRecursion(listptr head, int value);
 int maxItemByValue(listptr head, int max = INT_MIN);
 void printReverse(listptr head);
+bool isEqual(listptr head1, listptr head2);

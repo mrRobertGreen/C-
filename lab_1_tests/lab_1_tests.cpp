@@ -92,7 +92,37 @@ namespace lab1tests
 				maxItemByValue(list3);
 			};
 			Assert::ExpectException<std::exception>(func);
-			
+		}
+		TEST_METHOD(insertAfterTest)
+		{
+			const int len1 = 3;
+			const int res_len1 = 4;
+			int arr1[len1] = { 1, 3, 4 };
+			int res_arr1[res_len1] = { 1, 2, 3, 4 };
+			listptr list1 = arrToList(arr1, len1);
+			listptr res_list1 = arrToList(res_arr1, res_len1);
+			insertAfter(2, list1, 1);
+			Assert::IsTrue(isEqual(list1, res_list1));
+
+			const int len2 = 3;
+			const int res_len2 = 4;
+			int arr2[len2] = { 1, 2, 3 };
+			int res_arr2[res_len2] = { 1, 2, 3, 4 };
+			listptr list2 = arrToList(arr2, len2);
+			listptr res_list2 = arrToList(res_arr2, res_len2);
+			insertAfter(4, list2, 3);
+			Assert::IsTrue(isEqual(list2, res_list2));
+
+			auto func = [] {
+				const int len3 = 3;
+				const int res_len3 = 4;
+				int arr3[len3] = { 1, 2, 3 };
+				int res_arr3[res_len3] = { 1, 2, 3, 4 };
+				listptr list3 = arrToList(arr3, len3);
+				listptr res_list3 = arrToList(res_arr3, res_len3);
+				insertAfter(4, list3, 10);
+			};
+			Assert::ExpectException<std::exception>(func);
 		}
 	};
 }

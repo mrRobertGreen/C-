@@ -25,10 +25,12 @@ class Point {
 		void shift_X(double dx);
 		void shift_Y(double dy);
 		bool isEqual(const Point& p);
+		void print();
+		double distance_to(Point& point);
 		~Point() {
 			std::cout << "Point has been destructed\n";
 		}
 };
 
 Point add1(Point a, Point b);
-Point add2(const Point& a, const Point& b);
+Point add2(Point& a, Point& b);

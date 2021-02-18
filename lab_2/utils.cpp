@@ -50,11 +50,22 @@ Point add1(Point a, Point b) {
 	double resY = y1 + y2;
 	return Point(resX, resY);
 }
-Point add2(const Point& a, const Point& b) {
+Point add2(Point& a, Point& b) {
 	double x1, x2, y1, y2;
 	tie(x1, y1) = a.get_point();
 	tie(x2, y2) = b.get_point();
 	double resX = x1 + x2;
 	double resY = y1 + y2;
 	return Point(resX, resY);
+}
+void Point::print() {
+	cout << "Point coordinates:\n";
+	cout << "x = " << x << "\n";
+	cout << "y = " << y << "\n";
+}
+double Point::distance_to(Point& point) {
+	double x, y;
+	tie(x, y) = point.get_point();
+	double distance = sqrt(pow(this->x - x, 2) + pow(this->y - y, 2));
+	return distance;
 }
