@@ -13,18 +13,18 @@ class Point {
 	private:
 		double x, y;
 
-		tuple<double, double> convert_to_polar();
+		tuple<double, double> convert_to_polar() const;
 
 	public:
 		Point();
 		Point(double x, double y);
 
-		void add(const Point& p);
+		void add(Point& p);
 		void set_point(double x, double y);
-		std::tuple<double, double> get_point(CoordinatesType type = CoordinatesType::EUCLIDIAN);
+		std::tuple<double, double> get_point(CoordinatesType type = CoordinatesType::EUCLIDIAN) const;
 		void shift_X(double dx);
 		void shift_Y(double dy);
-		bool isEqual(const Point& p);
+		bool is_equal(const Point& p);
 		void print();
 		double distance_to(Point& point);
 		~Point() {
