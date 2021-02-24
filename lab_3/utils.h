@@ -11,5 +11,17 @@ public:
 		denom = (b != 0) ? b : 1;
 	}
 	Fract operator+(const Fract& other);
+	Fract operator-(const Fract& other);
+	Fract operator*(const Fract& other);
+	Fract operator/(const Fract& other);
 	friend std::ostream& operator << (std::ostream&, const Fract&);
+	friend std::istream& operator >> (std::istream&, Fract&);
+};
+
+class Date {
+private:
+	int day, month, year;
+
+public:
+	Date() {}
 };

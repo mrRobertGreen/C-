@@ -5,7 +5,7 @@ using namespace std;
 
 int main() {
 	Fract f1(2, 3), f2(3), f3(1, 2);
-	cout << "f1=" << f1 << endl;
+	/*cout << "f1=" << f1 << endl;
 	cout << "f2=" << f2 << endl;
 	cout << "f3=" << f3 << endl;
 	Fract res = f1 + f2;
@@ -16,8 +16,10 @@ int main() {
 	sum = sum + f1;
 	sum = sum + f2;
 	sum = sum + f3;
-	cout << sum << endl;
-	system("pause");
+	cout << sum << endl;*/
+
+	cin >> f1;
+	cout << f1;
 
 	return EXIT_SUCCESS;
 }
