@@ -18,8 +18,8 @@ void Point::set_point(double x, double y) {
 }
 tuple<double, double> Point::convert_to_polar() const {
 	double r = sqrt(x * x + y * y);
-	double tan = tanh(y / x);
-	double angle = atanh(tan);
+	double tangens = y / x;
+	double angle = atan(tangens);
 	return tuple<double, double>(r, angle);
 }
 tuple<double, double> Point::get_point(CoordinatesType type) const {

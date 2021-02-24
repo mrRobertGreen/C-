@@ -4,6 +4,8 @@
 
 using namespace std;
 
+const double EPS = 0.001;
+
 enum CoordinatesType {
 	EUCLIDIAN,
 	POLAR

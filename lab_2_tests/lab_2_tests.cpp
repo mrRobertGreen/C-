@@ -95,5 +95,21 @@ namespace lab2tests
 			Assert::AreEqual(res_x2, x2);
 			Assert::AreEqual(res_y2, y2);
 		}
+		TEST_METHOD(get_point_test)
+		{
+			Point a = Point(1, 3);
+			double r, angle;
+			double r_res = 3.162, angle_res = 1.249;
+			tie(r, angle) = a.get_point(POLAR);
+			Assert::IsTrue(r - r_res < EPS);
+			Assert::IsTrue(fabs(angle - angle_res) < EPS);
+
+			double x_res = 1.3, y_res = 3.5;
+			Point b = Point(x_res, y_res);
+			double x, y;
+			tie(x, y) = b.get_point(EUCLIDIAN);
+			Assert::AreEqual(x, x_res);
+			Assert::AreEqual(y, y_res);
+		}
 	};
 }
