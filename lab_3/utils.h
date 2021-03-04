@@ -1,5 +1,6 @@
 #pragma once
 #include <iostream>
+#include <exception>
 
 class Fract {
 private:
@@ -9,6 +10,10 @@ public:
 	Fract() : numen(0), denom(1) {}
 	Fract(int a, int b = 1) :numen(a) {
 		denom = (b != 0) ? b : 1;
+		if (denom < 0 || (denom < 0 && numen < 0)) {
+			numen = -numen;
+			denom = -denom;
+		}
 	}
 	Fract operator+(const Fract& other);
 	Fract operator-(const Fract& other);
@@ -47,7 +52,6 @@ private:
 
 	bool is_valid_date(int day, MONTH month, int year);
 	bool is_leap_year(int year);
-	
 	int get_days_count(MONTH month, int year);
 
 public:
@@ -59,16 +63,11 @@ public:
 			this->month = month;
 			this->year = year;
 		}
-		else
-		{
-			this->day = 1;
-			this->month = MONTH::JANUARY;
-			this->year = 0;
-		}
+		else throw std::exception("invalid input date");
 	}
 	void add_days(int days);
-	void add_months(int month);
-	void add_years(int year);
+	/*void add_months(int month);
+	void add_years(int year);*/
 	bool operator==(const Date& other) const;
 	bool operator!=(const Date& other) const;
 	bool operator>(const Date& other) const;
