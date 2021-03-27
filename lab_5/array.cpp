@@ -1,35 +1,9 @@
 ﻿#include <iostream>
 #include <exception>
-#include "utils.h"
+#include "header.h"
 
 using namespace std;
 
-//Изменение деструктора
-//Деструктор
-Array::~Array() {
-	if (arr != nullptr) {
-		delete[] arr;
-		cout << "Array deleted!" << endl;
-	}
-}
-//move- конструктор
-Array::Array(Array&& other) {
-	cout << "MOVE constructor\n";
-	n = other.n;
-	arr = other.arr;
-	other.arr = nullptr; // Не позволит сразу деструктору удалить массив, перемещенный в другой объект
-}
-//move- оператор присваивания
-Array& Array::operator= (Array&& other) {
-	//if (this != &arr) { - здесь не бывает самоприсваивания
-	cout << "MOVE operator=\n";
-	if (arr != nullptr)
-		delete[] arr;
-	n = other.n;
-	arr = other.arr;
-	other.arr = nullptr;	// Не позволит сразу деструктору удалить массив, перемещенный в другой объект
-	return *this;
-}
 Array::Array() { // конструктор по умолчанию - создается массив на 10 элементов равных 0
 	n = 10;
 	arr = new int[n];
@@ -72,25 +46,25 @@ Array Array::operator+(const int x) { // увеличение каждого э�
 		C.arr[i] = arr[i] + x;
 	return C;
 }
-//Array& Array::operator=(const Array& B) { // присваивание массива
-//	if (this != &B) {
-//		delete[] arr;
-//		n = B.n;
-//		arr = new int[n];
-//		for (int i = 0; i < n; i++)
-//			arr[i] = B.arr[i];
-//	}
-//	return *this;
-//}
+Array& Array::operator=(const Array& B) { // присваивание массива
+	if (this != &B) {
+		delete[] arr;
+		n = B.n;
+		arr = new int[n];
+		for (int i = 0; i < n; i++)
+			arr[i] = B.arr[i];
+	}
+	return *this;
+}
 int& Array::operator[](int i) { // взятие элемента по индексу
 	return arr[i];
 }
 int Array::operator[](int i) const { // взятие элемента по индексу (константный метод)
 	return arr[i];
 }
-//Array::~Array() { // удаление массива (деструктор)
-//	delete[] arr;
-//}
+Array::~Array() { // удаление массива (деструктор)
+	delete[] arr;
+}
 ostream& operator << (ostream& out, const Array& arr) { // вывод в поток
 	for (int i = 0; i < arr.n; i++)
 	{
@@ -106,6 +80,19 @@ istream& operator >> (istream& in, Array& arr) { // ввод из потока
 		in >> arr[i];
 	}
 	return in;
+}
+int Array::operator==(const Array& arr) const {
+	if (arr.length() != n)
+		return false;
+	for (int i = 0; i < n; i++)
+	{
+		if (arr[i] != this->arr[i])
+			return false;
+	}
+	return true;
+}
+int Array::operator!=(const Array& arr) const {
+	return !(*this == arr);
 }
 int Array::find_index(int value) const { // поиск индекса элемента с заданным значением
 	for (int i = 0; i < n; i++)
@@ -147,18 +134,4 @@ Array& Array::remove_by_index(int idx) { // удаление элемента с
 		arr[i] = arr[i + 1];
 	this->resize(n - 1);
 	return *this;
-}
-
-// вспомогательные функции
-bool are_equal_arrs(const Array& a, const Array& b) { // проверка на равенство двух массивов
-	int a_len = a.length();
-	int b_len = b.length();
-	if (a_len != b_len)
-		return false;
-	for (int i = 0; i < a.length(); i++)
-	{
-		if (a[i] != b[i])
-			return false;
-	}
-	return true;
 }

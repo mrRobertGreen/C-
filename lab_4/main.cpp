@@ -6,10 +6,9 @@ using namespace std;
 int main() {
 	// проверка работы ввода и вывода
 	Array a(3);
-
-	cout << a;
-	cin >> a;
-	cout << a;
+	Array b(3, 1);
+	Array c(a + b);
+	c = a + b;
 
 	return EXIT_SUCCESS;
 }
