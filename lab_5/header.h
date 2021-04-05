@@ -12,7 +12,7 @@ public:
 	Array(); //конструктор по умолчанию
 	Array(int _n, int x = 0); //конструктор с параметрами
 	Array(const Array& other); //конструктор копии
-	~Array(); // деструктор
+	~Array(); // деструкторs
 	// методы
 	int length() const;
 	Array operator+(const Array& arr);
@@ -32,32 +32,4 @@ public:
 	// дружественные функции
 	friend ostream& operator << (ostream& out, const Array& arr);
 	friend istream& operator >> (istream& in, Array& arr);
-};
-
-class BigNum {
-private:
-	bool is_negative;
-	Array digits;
-public:
-	BigNum();
-	BigNum(int n);
-	BigNum(const string str);
-	BigNum(const BigNum& other);
-
-	operator int();
-	operator string();
-	BigNum& operator=(const BigNum& num);
-	int operator[](int idx) const;
-	bool operator==(const BigNum& num) const;
-	bool operator!=(const BigNum& num) const;
-	bool operator>(const BigNum& num) const;
-	bool operator>=(const BigNum& num) const;
-	bool operator<(const BigNum& num) const;
-	bool operator<=(const BigNum& num) const;
-	BigNum operator+(const BigNum& num) const;
-	bool get_is_negative();
-	Array get_digits();
-
-	friend ostream& operator << (ostream& out, const BigNum& num);
-	friend istream& operator >> (istream& in, BigNum& num);
 };
