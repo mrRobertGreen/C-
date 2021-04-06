@@ -5,6 +5,10 @@
 using namespace std;
 
 int main() {
+	/*Book book = Book(); // for testing
+	cout << book;
+	cin >> book;
+	cout << book*/
 
 	History h1_1 = History(2005, 35);
 	History h1_2 = History(2010, 65);
@@ -38,7 +42,13 @@ int main() {
 	books[1] = book2;
 	books[2] = book3;
 
-	cout << "Average pages count\n";
+	cout << "Books:\n";
+	for (int i = 0; i < books.length(); i++)
+	{
+		cout << books[i];
+	}
+
+	cout << "Average pages count:\n";
 	for (int i = 0; i < books.length(); i++)
 	{
 		cout << books[i].getAuthor() << ": " << books[i].averagePageCount() << "\n";

@@ -12,7 +12,7 @@ struct History {
 		if (year < 0)
 		{
 			this->year = 1;
-			cout << "Year value is incorrect. Field was filled with a default value.";
+			cout << "Year value is incorrect. Field was filled with a default value.\n";
 		}
 		else {
 			this->year = year;
@@ -20,7 +20,7 @@ struct History {
 		if (pages < 0)
 		{
 			this->pages = 1;
-			cout << "Pages value is incorrect. Field was filled with a default value.";
+			cout << "Pages value is incorrect. Field was filled with a default value.\n";
 		}
 		else {
 			this->pages = pages;
@@ -33,7 +33,7 @@ class Book {
 private:
 	string name;
 	string author;
-	
+
 public:
 	Array<History> data;
 	Book(string name, string author, Array<History> data)
@@ -51,4 +51,7 @@ public:
 	bool operator==(const Book& other) const;
 	bool operator>(const Book& other) const;
 	bool operator<(const Book& other) const;
+
+	friend ostream& operator<<(ostream& out, const Book& book);
+	friend istream& operator>>(istream& in, Book& book);
 };

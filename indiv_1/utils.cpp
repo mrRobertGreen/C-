@@ -60,3 +60,31 @@ bool Book::operator>(const Book& other) const {
 bool Book::operator<(const Book& other) const {
 	return this->averagePageCount() < other.averagePageCount();
 }
+ostream& operator<<(ostream& out, const Book& book) {
+	out << "Name: " << book.name << "\n";
+	out << "Author: " << book.author << "\n";
+	out << "Data:\n";
+	for (int i = 0; i < book.data.length(); i++)
+	{
+		out << "Year: " << book.data[i].year << ", pages: " << book.data[i].pages << "\n";
+	}
+	return out;
+}
+istream& operator>>(istream& in, Book& book) {
+	cout << "Enter book name: ";
+	in >> book.name;
+	cout << "Enter author of book: ";
+	in >> book.author;
+	int pages, year;
+	Array<History> data = Array<History>(3, History());
+	for (int i = 0; i < 3; i++)
+	{
+		cout << "Enter count of pages: ";
+		in >> pages;
+		cout << "Enter year of edition: ";
+		in >> year;
+		data[i] = History(year, pages);
+	}
+	book.data = data;
+	return in;
+}
