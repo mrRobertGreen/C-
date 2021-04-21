@@ -4,7 +4,7 @@
 
 using namespace std;
 
-template <typename T>
+template <typename T, int size = 3>
 class Array {
 private:
 	int n;
@@ -35,33 +35,33 @@ public:
 	friend istream& operator >> (istream& in, Array& arr);
 };
 
-template <typename T>
-Array<T>::Array() { // конструктор по умолчанию - создается массив на 10 элементов равных 0
-	n = 10;
+template <typename T, int size>
+Array<T, size>::Array() { // конструктор по умолчанию - создается массив на 10 элементов равных 0
+	n = size;
 	arr = new T[n];
 	for (int i = 0; i < n; i++)
 		arr[i] = T();
 }
-template <typename T>
-Array<T>::Array(int _n, T x) { // конструктор с параметрами
+template <typename T, int size>
+Array<T, size>::Array(int _n, T x) { // конструктор с параметрами
 	n = _n;
 	arr = new T[n];
 	for (int i = 0; i < n; i++)
 		arr[i] = x;
 }
-template <typename T>
-Array<T>::Array(const Array& B) { // констуктор копии
+template <typename T, int size>
+Array<T, size>::Array(const Array& B) { // констуктор копии
 	n = B.n;
 	arr = new T[n];
 	for (int i = 0; i < n; i++)
 		arr[i] = B.arr[i];
 }
-template <typename T>
-int Array<T>::length() const { // длина массива
+template <typename T, int size>
+int Array<T, size>::length() const { // длина массива
 	return n;
 }
-template <typename T>
-Array<T> Array<T>::operator+(const Array<T>& B) { // поэлементное сложение массивов
+template <typename T, int size>
+Array<T, > Array<T, size>::operator+(const Array<T, size>& B) { // поэлементное сложение массивов
 	if (n != B.n)
 		throw exception("arrays have different lenghts");
 	Array C(n);

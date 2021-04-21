@@ -1,0 +1,5 @@
+Polygon 4 6
+Triangle 17 6 22
+Square 5
+Triangle 3 4 5
+Square 1

@@ -42,6 +42,10 @@ int main() {
 	books[1] = book2;
 	books[2] = book3;
 
+	Book inputBook;
+	cin >> inputBook;
+	books.push(inputBook);
+
 	cout << "Books:\n";
 	for (int i = 0; i < books.length(); i++)
 	{

@@ -52,7 +52,18 @@ Book Book::operator=(const Book& other) {
 	return *this;
 }
 bool Book::operator==(const Book& other) const {
-	return other.averagePageCount() == this->averagePageCount();
+	if (this->name != other.name)
+		return false;
+	if (this->author != other.author)
+		return false;
+	for (int i = 0; i < other.data.length(); i++)
+	{
+		if (this->data[i].pages != other.data[i].pages)
+			return false;
+		if (this->data[i].year != other.data[i].year)
+			return false;
+	}
+	return true;
 }
 bool Book::operator>(const Book& other) const {
 	return this->averagePageCount() > other.averagePageCount();
@@ -72,9 +83,9 @@ ostream& operator<<(ostream& out, const Book& book) {
 }
 istream& operator>>(istream& in, Book& book) {
 	cout << "Enter book name: ";
-	in >> book.name;
+	getline(in, book.name);
 	cout << "Enter author of book: ";
-	in >> book.author;
+	getline(in, book.author);
 	int pages, year;
 	Array<History> data = Array<History>(3, History());
 	for (int i = 0; i < 3; i++)

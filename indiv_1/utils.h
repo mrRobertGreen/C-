@@ -33,9 +33,9 @@ class Book {
 private:
 	string name;
 	string author;
-
-public:
 	Array<History> data;
+public:
+	
 	Book(string name, string author, Array<History> data)
 		: name(name), author(author), data(data) {};
 	Book() : name("noname"), author("unknown"), data(Array<History>(3, History(0, 0))) {};
