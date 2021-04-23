@@ -1,5 +1,6 @@
 ﻿#pragma once
 #include <iostream>
+#include <exception>
 
 using namespace std;
 
@@ -16,87 +17,126 @@ struct Node
 	friend 	ostream& operator<< (ostream& out, const Node& x);
 };
 
-
-class Error { //можно сделать реализацию или наследовать от exception
-};
-
-class List_iter;
+class ListIterator;
 
 class List {
 private:
 	Node* first;
 	Node* last;
-	Error err;
 public:
-	List() : first(nullptr), last(nullptr) {	}
-	~List();
-	bool isEmpty() const;
-	void addFirst(int x);
-	void addLast(int val);
-	int getFirst()const;
-	int getLast()const;
-	int delFirst();
-	int delLast();
-	//обработка с предикатом
-	int kol(bool(*f) (int));
-	void for_each(void(*action)(int&));
-	//в полной реализации могут быть еще функции
-	List_iter begin()const;
+	List() : first(nullptr), last(nullptr) {}
+	~List() {
+		while (first)
+		{
+			Node* cur = first;
+			first = first->next;
+			delete cur;
+		}
+		first = last = nullptr;
+	};
+	bool isEmpty() const {
+		return first == nullptr && last == nullptr;
+	};
+	void addFirst(int x) {
+		Node* elem = new Node(x, first);
+		if (!first)
+			last = elem;
+		first = elem;
 
-	List_iter end()const;
+	};
+	void addLast(int val) {
+		Node* elem = new Node(val, nullptr);
+		if (!first)
+			first = last = elem;
+		else {
+			last->next = elem;
+			last = elem;
+		}
+	};
+	int getFirst() const {
+		return first->data;
+	};
+	int getLast() const {
+		return last->data;
+	};
+	void delFirst() {
+		if (first)
+		{
+			Node* newFirst = new Node(first->next->data, first->next->next);
+			delete first;
+			first = newFirst;
+		}
+		else throw exception("list is empty");
+	};
+	void delLast() {
+		if (last)
+		{
+			Node* newLast = new Node(first->data, first->next);
+			while (newLast->next != last)
+				newLast = newLast->next;
+			last = newLast;
+			last->next = nullptr;
+			delete last;
+		}
+		else throw exception("list is empty");
+	};
+
+	//обработка с предикатом
+	int count(bool(*f) (int));
+	void for_each(void(*action)(int&));
+
+	ListIterator begin() const;
+	ListIterator end() const;
 
 	friend ostream& operator << (ostream& out, const List& y);
 
 };
 //реализация методов получения итератора
-/*
-List_iter List:: begin()const {
-return List_iter(this, first);
+ListIterator List::begin() const {
+	return ListIterator(this, first);
 }
 
-List_iter List::end()const {
-return List_iter(this, nullptr);
+ListIterator List::end() const {
+	return ListIterator(this, nullptr);
 }
-*/
 
 // пример функций для проверки метода 
-//	int kol(bool(*f) (int));
+//	int count(bool(*f) (int));
 
-/*
+
 bool odd(int x)
 {
 	return x % 2 != 0;
-}*/
+}
 // пример функций для проверки метода 
 //	void for_each(void(*action)(int &));
-/*
-void mult2(int & x) {
+
+void mult2(int& x) {
 	x *= 2;
-}*/
+}
 
 
-class List_iter {
+class ListIterator {
 private:
 	const List* collection;
 	Node* cur;
 public:
-	List_iter(const List* s, Node* e) : collection(s), cur(e) {}
+	ListIterator(const List* s, Node* e) : collection(s), cur(e) {}
 	int& operator *() {
-		if (cur)      return cur->data;
-		else         throw Error();
+		if (cur) return cur->data;
+		else throw exception("elem is undefined");
 	}
-	List_iter operator++() { //префиксный ++
+	ListIterator operator++() { // префиксный ++
 		if (cur) {
 			cur = cur->next;
 			return *this;
 		}
-		else throw Error();
+		else throw exception("elem is undefined");
 	}
-	bool operator == (const List_iter& ri) const {
-		return ((collection == ri.collection) && (cur == ri.cur));
+	bool operator == (const ListIterator& iter) const {
+		return ((collection == iter.collection) && (cur == iter.cur));
 	}
-	bool operator != (const List_iter& ri) const {
-		return !(*this == ri);
+	bool operator != (const ListIterator& iter) const {
+		return !(*this == iter);
 	}
-
-};	
+};
