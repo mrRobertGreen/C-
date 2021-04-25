@@ -14,7 +14,10 @@ struct Node
 		this->next = next;
 	}
 
-	friend 	ostream& operator<< (ostream& out, const Node& x);
+	friend 	ostream& operator<< (ostream& out, const Node& x) {
+		out << x.data;
+		return out;
+	};
 };
 
 class ListIterator;
@@ -74,47 +77,58 @@ public:
 			Node* newLast = new Node(first->data, first->next);
 			while (newLast->next != last)
 				newLast = newLast->next;
-			last = newLast;
-			last->next = nullptr;
 			delete last;
+			newLast->next = nullptr;
+			last = newLast;
 		}
 		else throw exception("list is empty");
 	};
 
 	//обработка с предикатом
-	int count(bool(*f) (int));
-	void for_each(void(*action)(int&));
+	int count(bool(*f) (int)) {
+		Node* cur = first;
+		int res = 0;
+		while (cur) {
+			if (f(cur->data))
+				++res;
+			cur = cur->next;
+		}
+		return res;
+	};
+	void for_each(void(*action)(int&)) {
+		Node* cur = first;
+		while (cur) {
+			action(cur->data);
+			cur = cur->next;
+		}
+	};
 
 	ListIterator begin() const;
 	ListIterator end() const;
 
-	friend ostream& operator << (ostream& out, const List& y);
-
+	friend ostream& operator << (ostream& out, const List& list) {
+		Node* cur = list.first;
+		while (cur) {
+			out << cur->data << " ";
+			cur = cur->next;
+		}
+		out << "\n";
+		return out;
+	};
 };
-//реализация методов получения итератора
-ListIterator List::begin() const {
-	return ListIterator(this, first);
-}
 
-ListIterator List::end() const {
-	return ListIterator(this, nullptr);
-}
 
 // пример функций для проверки метода 
 //	int count(bool(*f) (int));
-
-
-bool odd(int x)
-{
+bool odd(int x) {
 	return x % 2 != 0;
 }
+
 // пример функций для проверки метода 
 //	void for_each(void(*action)(int &));
-
 void mult2(int& x) {
 	x *= 2;
 }
-
 
 class ListIterator {
 private:
@@ -139,4 +153,11 @@ public:
 	bool operator != (const ListIterator& iter) const {
 		return !(*this == iter);
 	}
+};
+
+ListIterator List::begin() const {
+	return ListIterator(this, first);
+};
+ListIterator List::end() const {
+	return ListIterator(this, nullptr);
 };
