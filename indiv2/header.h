@@ -5,27 +5,34 @@
 using namespace std;
 
 class EncryptionKey {
-private:
-	unsigned char* key[256];
+protected:
+	unsigned char key[256];
 public:
-	EncryptionKey() {};
+	EncryptionKey();
+
+	void print() {
+		cout << "key: " << endl;
+		for (int i = 0; i < 256; ++i) {
+			cout << key[i];
+		}
+	};
 };
 
 class Encoder : public EncryptionKey {
-public: 
+private: 
 	string filename;
-private:
+public:
 	Encoder(string filename) : filename(filename) { EncryptionKey(); };
 	void encode();
-	Decoder& create_decoder();
+	//Decoder create_decoder();
 
 	friend ifstream& operator<<(ifstream& fin, string filename);
 };
 
 class Decoder : public EncryptionKey {
-public:
-	string filename;
 private:
+	string filename;
+public:
 	Decoder(string filename) : filename(filename) {};
 	void decode();
 

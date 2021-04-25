@@ -4,7 +4,20 @@
 using namespace std;
 
 EncryptionKey::EncryptionKey() {
-	// TODO: @alex написать генерацию ключа шифрования
+	// заполняем исходный
+	for (int i = 0; i < 256; ++i)
+		this->key[i] = static_cast<unsigned char>(i);
+
+	int a, b;
+	unsigned char c;
+	// рандомно переставляем
+	for (int i = 0; i < 5000; ++i) {
+		a = rand() % 25;
+		b = rand() % 256;
+		c = this->key[a];
+		this->key[a] = this->key[b];
+		this->key[b] = c;
+	}
 }
 
 void Encoder::encode() {
@@ -17,6 +30,6 @@ void Encoder::encode() {
 	string data;
 	while (file.get(symb)) {
 		data.push_back(symb);
-		
+
 	}
 }
