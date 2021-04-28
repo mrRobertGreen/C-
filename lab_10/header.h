@@ -45,7 +45,6 @@ public:
 		if (!first)
 			last = elem;
 		first = elem;
-
 	};
 	void addLast(int val) {
 		Node* elem = new Node(val, nullptr);
@@ -83,6 +82,8 @@ public:
 		}
 		else throw exception("list is empty");
 	};
+	void insert(int x, ListIterator& target);
+	void remove(ListIterator& target);
 
 	//обработка с предикатом
 	int count(bool(*f) (int)) {
@@ -117,7 +118,6 @@ public:
 	};
 };
 
-
 // пример функций для проверки метода 
 //	int count(bool(*f) (int));
 bool odd(int x) {
@@ -147,6 +147,15 @@ public:
 		}
 		else throw exception("elem is undefined");
 	}
+	ListIterator operator+(unsigned int step) {
+		if (cur) {
+			ListIterator res = ListIterator(this->collection, this->cur);
+			while (step--)
+				res.cur = res.cur->next;
+			return res;
+		}
+		else throw exception("elem is undefined");
+	};
 	bool operator == (const ListIterator& iter) const {
 		return ((collection == iter.collection) && (cur == iter.cur));
 	}
@@ -161,3 +170,37 @@ ListIterator List::begin() const {
 ListIterator List::end() const {
 	return ListIterator(this, nullptr);
 };
+
+void List::insert(int x, ListIterator& target) {
+	Node* cur = first;
+	if (target == begin())
+		addFirst(x);
+	else
+	{
+		while (cur->next && target != ListIterator(this, cur->next))
+			cur = cur->next;
+		if (cur->next) {
+			Node* elem = new Node(x, cur->next);
+			cur->next = elem;
+		}
+		else
+			throw exception("incorrect iterator value");
+	}
+};
+void List::remove(ListIterator& target) {
+	Node* cur = first;
+	if (target == begin())
+		delFirst();
+	else
+	{
+		while (cur->next && target != ListIterator(this, cur->next))
+			cur = cur->next;
+		if (cur->next) {
+			Node* temp = cur->next;
+			cur->next = cur->next->next;
+			delete temp;
+		}
+		else
+			throw exception("incorrect iterator value");
+	}
+}

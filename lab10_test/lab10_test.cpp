@@ -25,8 +25,35 @@ namespace lab10test
 				list.addLast(i);
 			list.delLast();
 			ListIterator iter = list.begin();
-			while (++iter != list.end()) {}
+			while (iter + 1 != list.end())
+				++iter;
 			Assert::AreEqual(*iter, 3);
+		}
+		TEST_METHOD(for_each_test)
+		{
+			List list;
+			for (int i = 0; i < 5; ++i)	
+				list.addLast(i);
+			list.for_each(mult2);
+			ListIterator iter = list.begin();
+			for (int i = 0; i < 5; ++i)
+			{
+				Assert::AreEqual(*iter, i*2);
+				++iter;
+			}	
+		}
+		TEST_METHOD(countTest)
+		{
+			List list;
+			for (int i = 0; i < 5; ++i)	
+				list.addLast(i);
+			list.for_each(mult2);
+			ListIterator iter = list.begin();
+			for (int i = 0; i < 5; ++i)
+			{
+				Assert::AreEqual(*iter, i*2);
+				++iter;
+			}	
 		}
 	};
 }
