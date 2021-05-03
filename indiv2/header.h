@@ -5,7 +5,7 @@
 
 using namespace std;
 
-class Decoder : public EncryptionKey {};
+
 
 class EncryptionKey {
 protected:
@@ -20,6 +20,8 @@ public:
 		}
 	};
 };
+
+class Decoder;
 
 class Encoder : public EncryptionKey {
 private: 
