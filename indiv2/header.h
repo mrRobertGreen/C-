@@ -21,7 +21,15 @@ public:
 	};
 };
 
-class Decoder;
+class Decoder : public EncryptionKey {
+private:
+	string filename;
+public:
+	Decoder(string filename) : filename(filename) {};
+	void decode();
+
+	friend ostream& operator>>(ofstream& fout, string filename);
+};
 
 class Encoder : public EncryptionKey {
 private: 
@@ -35,12 +43,3 @@ public:
 	void operator<<(string &data);
 };
 
-class Decoder : public EncryptionKey {
-private:
-	string filename;
-public:
-	Decoder(string filename) : filename(filename) {};
-	void decode();
-
-	friend ostream& operator>>(ofstream& fout, string filename);
-};
