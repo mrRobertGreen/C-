@@ -1,8 +1,11 @@
 ﻿#pragma once
 #include <iostream>
 #include <fstream>
+#include <string>
 
 using namespace std;
+
+class Decoder : public EncryptionKey {};
 
 class EncryptionKey {
 protected:
@@ -21,12 +24,13 @@ public:
 class Encoder : public EncryptionKey {
 private: 
 	string filename;
+
+	string encode(string& data);
 public:
 	Encoder(string filename) : filename(filename) { EncryptionKey(); };
-	void encode();
-	//Decoder create_decoder();
+	Decoder create_decoder();
 
-	friend ifstream& operator<<(ifstream& fin, string filename);
+	void operator<<(string &data);
 };
 
 class Decoder : public EncryptionKey {

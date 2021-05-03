@@ -1,5 +1,5 @@
-﻿#include <iostream>
-#include "header.h"
+﻿#include "header.h"
+#include <exception>
 
 using namespace std;
 
@@ -14,22 +14,23 @@ EncryptionKey::EncryptionKey() {
 	for (int i = 0; i < 5000; ++i) {
 		a = rand() % 25;
 		b = rand() % 256;
-		c = this->key[a];
-		this->key[a] = this->key[b];
-		this->key[b] = c;
+		swap(this->key[a], this->key[b]);
 	}
 }
 
-void Encoder::encode() {
-	fstream file(filename, fstream::in, fstream::out);
+void Encoder::operator<<(string &data) {
+	ofstream file(filename);
 	if (!file.is_open()) {
 		cerr << "Can't open " << filename << "\n";
 		return;
 	}
-	char symb;
-	string data;
-	while (file.get(symb)) {
-		data.push_back(symb);
-
-	}
+	string encoded_data = encode(data);
+	file << encoded_data;
+	file.close();
+}
+string Encoder::encode(string &data) {
+	string res = "";
+	const unsigned char* ptr = reinterpret_cast<unsigned char*>(&data);
+	
+	return res;
 }
