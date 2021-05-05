@@ -23,7 +23,7 @@ public:
 	Decoder(string filename) : filename(filename) {};
 	void decode();
 
-	friend ostream& operator>>(ofstream& fout, string filename);
+	ostream& operator>>(ostream out) {};
 };
 
 class Encoder : public EncryptionKey {
