@@ -13,12 +13,7 @@ protected:
 public:
 	EncryptionKey();
 
-	void print() {
-		cout << "key: " << endl;
-		for (int i = 0; i < 256; ++i) {
-			cout << key[i];
-		}
-	};
+	void print();
 };
 
 class Decoder : public EncryptionKey {

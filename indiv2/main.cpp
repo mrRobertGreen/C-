@@ -4,9 +4,13 @@
 using namespace std;
 
 int main() {
-	EncryptionKey a;
-	a.print();
-	//cout << static_cast<unsigned char>(5);
+	/*EncryptionKey a;
+	a.print();*/
+
+	string str = "hello";
+	Encoder encoder("test.txt");
+	encoder << str;
+	
 
 	return EXIT_SUCCESS;
 }
