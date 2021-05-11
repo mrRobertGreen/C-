@@ -51,3 +51,33 @@ string Encoder::encode(string& data) {
 
 	return res;
 }
+
+string Decoder::decode(string& data) {
+	string res = "";
+	unsigned char* ptr = reinterpret_cast<unsigned char*>(&data); // преобразуем указатель
+	
+	int size = sizeof(data);
+	int idx;
+	while (size) { // проходимся новым указателем по строке
+		idx = static_cast<int>(*ptr); // преобразуем unsigned char в int
+		res += key[idx]; // используем полученный int как индекс массива-ключа
+		++ptr;
+		--size;
+	}
+
+	return res;
+}
+
+void Decoder::operator>>(string& data) {
+	ifstream file(filename);
+	data = "";
+	if (!file.is_open()) {
+		cerr << "Can't open " << filename << "\n";
+		return;
+	}
+	string encoded;
+	while (getline(file, encoded)) {
+		data += this->decode(encoded);
+	}
+	file.close();
+}
