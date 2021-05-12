@@ -16,9 +16,7 @@ EncryptionKey::EncryptionKey() {
 		b = rand() % 256;
 		swap(this->key[a], this->key[b]);
 	}
-	ofstream key_file("key.txt");
-	key_file << key;
-	key_file.close();
+	
 }
 void EncryptionKey::print() {
 	cout << "key: " << endl;

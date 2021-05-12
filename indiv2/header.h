@@ -38,7 +38,12 @@ private:
 	string simple_encode(string& data);
 	string encode(string& data);
 public:
-	Encoder(string filename) : filename(filename) { EncryptionKey(); };
+	Encoder(string filename) : filename(filename) {
+		EncryptionKey();
+		ofstream key_file(filename.substr(0, filename.size() - 4) + "_key.txt");
+		key_file << key;
+		key_file.close();
+	};
 	Decoder create_decoder();
 
 	void operator<<(string& data);
