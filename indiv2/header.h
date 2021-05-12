@@ -22,11 +22,12 @@ public:
 class Decoder : public EncryptionKey {
 private:
 	string filename;
+
+	string simple_decode(string data);
+	string decode(string data);
 public:
 	Decoder(string filename, unsigned char key[256]) : filename(filename),  EncryptionKey(key) {};
-	string decode(string data);
 
-	//ostream& operator>>(ostream out, string data);
 	void operator>>(string& data);
 };
 
@@ -34,6 +35,7 @@ class Encoder : public EncryptionKey {
 private:
 	string filename;
 
+	string simple_encode(string& data);
 	string encode(string& data);
 public:
 	Encoder(string filename) : filename(filename) { EncryptionKey(); };

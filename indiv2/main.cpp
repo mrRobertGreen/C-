@@ -4,23 +4,23 @@
 using namespace std;
 
 int main() {
-	/*EncryptionKey a;
-	a.print();*/
-
+	string filename = "test.txt";
 	string str = "hello";
-	Encoder encoder("test.txt");
-	encoder.print();
+	cout << "initial data: " << str << "\n";
+	Encoder encoder(filename);
 	encoder << str;
-	string s;
-	//Decoder dec("test.txt");
-	//dec >> s;
-	Decoder decoder = encoder.create_decoder();
-	decoder >> s;
-	cout << s;
-	/*encoder.print();
-	decoder.print();*/
 
-	//cout << static_cast<int>(static_cast<char>(5));
+	ifstream file(filename);
+	char ch;
+	cout << "encoded data: ";
+	while (file >> ch)
+		cout << ch;
+	cout << "\n";
+
+	string decoded;
+	Decoder decoder = encoder.create_decoder();
+	decoder >> decoded;
+	cout << "decoded data: " << decoded << "\n";
 	
 
 	return EXIT_SUCCESS;

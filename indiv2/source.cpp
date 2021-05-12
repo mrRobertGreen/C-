@@ -38,55 +38,64 @@ void Encoder::operator<<(string& data) {
 		cerr << "Can't open " << filename << "\n";
 		return;
 	}
-	string encoded_data = encode(data); // кодируем данные
+	string encoded_data = simple_encode(data); // кодируем данные
+	//string encoded_data = encode(data); // кодируем данные
 	file << encoded_data; // записываем данные в файл
 	file.close();
 }
-string Encoder::encode(string& data) {
+string Encoder::simple_encode(string& data) {
 	string res = "";
-	//unsigned char* ptr = reinterpret_cast<unsigned char*>(&data); // преобразуем указатель
-	
-	
-	/*cout << "sizeof (data[0]): " << sizeof(data[0]) << "\n";
-	cout << "sizeof (data): " << sizeof(data) << "\n";
-	cout << "data.capacity(): " << data.capacity() << "\n";*/
-	//int size = sizeof(data);
 	int idx;
 	for (int i = 0; i < data.length(); i++)
 	{
 		idx = static_cast<int>(data[i]);
 		res += key[idx];
 	}
-	//while (size) { // проходимся новым указателем по строке
-	//	; // преобразуем unsigned char в int
-	//	 // используем полученный int как индекс массива-ключа
-	//	++ptr;
-	//	--size;
-	//}
-	
+	return res;
+}
+string Encoder::encode(string& data) {
+	string res = "";
+	unsigned char* ptr = reinterpret_cast<unsigned char*>(&data); // преобразуем указатель
+
+	/*cout << "sizeof (data[0]): " << sizeof(data[0]) << "\n";
+	cout << "sizeof (data): " << sizeof(data) << "\n";
+	cout << "data.capacity(): " << data.capacity() << "\n";*/
+
+	int size = sizeof(data);
+	int idx;
+	while (size) { // проходимся новым указателем по строке
+		idx = static_cast<int>(*ptr); // преобразуем unsigned char в int
+		res += key[idx]; // используем полученный int как индекс массива-ключа
+		++ptr;
+		--size;
+	}
+
 	return res;
 }
 
-string Decoder::decode(string data) {
-	
-	//cout << "encoded data: " << data << "\n";
+string Decoder::simple_decode(string data) {
 	string res = "";
-	//unsigned char* ptr = reinterpret_cast<unsigned char*>(&data); // преобразуем указатель
 	int idx;
 	for (int i = 0; i < data.length(); i++)
 	{
 		idx = find_index(data[i]);
-		res += key[idx];
+		res += static_cast<unsigned char>(idx);
 	}
 
-	
-	//while (size) { // проходимся новым указателем по строке
-	//	idx = find_index(*data);
-	//	//idx = static_cast<int>(*ptr); // преобразуем unsigned char в int
-	//	res += key[idx]; // используем полученный int как индекс массива-ключа
-	//	++data;
-	//	--size;
-	//}
+	return res;
+}
+string Decoder::decode(string data) {
+	string res = "";
+	unsigned char* ptr = reinterpret_cast<unsigned char*>(&data); // преобразуем указатель
+
+	int idx;
+	int size = sizeof(data);
+	while (size) { // проходимся новым указателем по строке
+		idx = find_index(*ptr);
+		res += static_cast<unsigned char>(idx);
+		++ptr;
+		--size;
+	}
 
 	return res;
 }
@@ -100,8 +109,10 @@ void Decoder::operator>>(string& data) {
 	}
 	string encoded;
 	while (getline(file, encoded)) {
-		data += this->decode(encoded);
+		data += this->simple_decode(encoded);
+		//data += this->decode(encoded);
 	}
+	
 	file.close();
 }
 Decoder Encoder::create_decoder() {
