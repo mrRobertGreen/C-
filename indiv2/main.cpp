@@ -11,9 +11,13 @@ int main() {
 	Encoder encoder("test.txt");
 	encoder << str;
 	string s;
-	Decoder dec("test.txt");
-	dec >> s;
-	cout << s;
+	//Decoder dec("test.txt");
+	//dec >> s;
+	//cout << s;
+	Decoder decoder = encoder.create_decoder();
+	encoder.print();
+	decoder.print();
+	
 
 	return EXIT_SUCCESS;
 }
