@@ -33,6 +33,8 @@ public:
 	void operator>>(string& data);
 	bool operator==(Decoder decoder);
 	//bool operator==(Encoder encoder);
+	friend ostream& operator<<(ostream& os, Decoder decoder);
+	friend istream& operator>>(istream& is, Decoder& decoder);
 };
 
 class Encoder : public EncryptionKey {
@@ -55,5 +57,7 @@ public:
 	void operator<<(string& data);
 	//bool operator==(Decoder decoder);
 	bool operator==(Encoder encoder);
+	friend ostream& operator<<(ostream& os, Encoder encoder);
+	friend istream& operator>>(istream& is, Encoder& encoder);
 };
 

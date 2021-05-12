@@ -5,7 +5,7 @@ using namespace std;
 
 int main() {
 	string filename = "test.txt";
-	string str = "hello \n abc";
+	string str = "password1234 \n abc";
 	cout << "initial data: " << str << "\n";
 	Encoder encoder(filename);
 	
@@ -22,7 +22,7 @@ int main() {
 	Decoder decoder = encoder.create_decoder();
 	decoder >> decoded;
 	cout << "decoded data: " << decoded << "\n";
-
-
+	cout << "---------------------" << "\n";
+	cout << decoder << "\n";
 	return EXIT_SUCCESS;
 }
