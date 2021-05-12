@@ -16,6 +16,9 @@ EncryptionKey::EncryptionKey() {
 		b = rand() % 256;
 		swap(this->key[a], this->key[b]);
 	}
+	ofstream key_file("key.txt");
+	key_file << key;
+	key_file.close();
 }
 void EncryptionKey::print() {
 	cout << "key: " << endl;
@@ -23,6 +26,11 @@ void EncryptionKey::print() {
 		cout << key[i];
 	}
 };
+int EncryptionKey::find_index(unsigned char value) {
+	int idx = 0;
+	while (value != key[idx]) ++idx;
+	return idx;
+}
 
 void Encoder::operator<<(string& data) {
 	ofstream file(filename);
@@ -53,13 +61,15 @@ string Encoder::encode(string& data) {
 }
 
 string Decoder::decode(string& data) {
+	//cout << "encoded data: " << data << "\n";
 	string res = "";
 	unsigned char* ptr = reinterpret_cast<unsigned char*>(&data); // преобразуем указатель
 	
 	int size = sizeof(data);
 	int idx;
 	while (size) { // проходимся новым указателем по строке
-		idx = static_cast<int>(*ptr); // преобразуем unsigned char в int
+		idx = find_index(*ptr);
+		//idx = static_cast<int>(*ptr); // преобразуем unsigned char в int
 		res += key[idx]; // используем полученный int как индекс массива-ключа
 		++ptr;
 		--size;
@@ -80,4 +90,7 @@ void Decoder::operator>>(string& data) {
 		data += this->decode(encoded);
 	}
 	file.close();
+}
+Decoder Encoder::create_decoder() {
+	return Decoder(filename, key);
 }
