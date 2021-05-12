@@ -15,7 +15,7 @@ public:
 			this->key[i] = key[i];
 	};
 	int find_index(unsigned char value);
-
+	unsigned char* get_key();
 	void print();
 };
 
@@ -26,9 +26,13 @@ private:
 	string simple_decode(string data);
 	string decode(string data);
 public:
-	Decoder(string filename, unsigned char key[256]) : filename(filename),  EncryptionKey(key) {};
+	Decoder(string filename, unsigned char key[256]) : filename(filename), EncryptionKey(key) {};
+	string get_filename();
+	void decode_file();
 
 	void operator>>(string& data);
+	bool operator==(Decoder decoder);
+	//bool operator==(Encoder encoder);
 };
 
 class Encoder : public EncryptionKey {
@@ -45,7 +49,11 @@ public:
 		key_file.close();
 	};
 	Decoder create_decoder();
+	string get_filename();
+
 
 	void operator<<(string& data);
+	//bool operator==(Decoder decoder);
+	bool operator==(Encoder encoder);
 };
 
