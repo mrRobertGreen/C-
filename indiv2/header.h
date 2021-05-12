@@ -24,7 +24,7 @@ private:
 	string filename;
 public:
 	Decoder(string filename, unsigned char key[256]) : filename(filename),  EncryptionKey(key) {};
-	string decode(string& data);
+	string decode(string data);
 
 	//ostream& operator>>(ostream out, string data);
 	void operator>>(string& data);

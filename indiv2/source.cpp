@@ -23,7 +23,7 @@ EncryptionKey::EncryptionKey() {
 void EncryptionKey::print() {
 	cout << "key: " << endl;
 	for (int i = 0; i < 256; ++i) {
-		cout << key[i];
+		cout << i << ": " << key[i] << "\n";
 	}
 };
 int EncryptionKey::find_index(unsigned char value) {
@@ -44,36 +44,49 @@ void Encoder::operator<<(string& data) {
 }
 string Encoder::encode(string& data) {
 	string res = "";
-	unsigned char* ptr = reinterpret_cast<unsigned char*>(&data); // преобразуем указатель
+	//unsigned char* ptr = reinterpret_cast<unsigned char*>(&data); // преобразуем указатель
+	
+	
 	/*cout << "sizeof (data[0]): " << sizeof(data[0]) << "\n";
 	cout << "sizeof (data): " << sizeof(data) << "\n";
 	cout << "data.capacity(): " << data.capacity() << "\n";*/
-	int size = sizeof(data);
+	//int size = sizeof(data);
 	int idx;
-	while (size) { // проходимся новым указателем по строке
-		idx = static_cast<int>(*ptr); // преобразуем unsigned char в int
-		res += key[idx]; // используем полученный int как индекс массива-ключа
-		++ptr;
-		--size;
+	for (int i = 0; i < data.length(); i++)
+	{
+		idx = static_cast<int>(data[i]);
+		res += key[idx];
 	}
-
+	//while (size) { // проходимся новым указателем по строке
+	//	; // преобразуем unsigned char в int
+	//	 // используем полученный int как индекс массива-ключа
+	//	++ptr;
+	//	--size;
+	//}
+	
 	return res;
 }
 
-string Decoder::decode(string& data) {
+string Decoder::decode(string data) {
+	
 	//cout << "encoded data: " << data << "\n";
 	string res = "";
-	unsigned char* ptr = reinterpret_cast<unsigned char*>(&data); // преобразуем указатель
-	
-	int size = sizeof(data);
+	//unsigned char* ptr = reinterpret_cast<unsigned char*>(&data); // преобразуем указатель
 	int idx;
-	while (size) { // проходимся новым указателем по строке
-		idx = find_index(*ptr);
-		//idx = static_cast<int>(*ptr); // преобразуем unsigned char в int
-		res += key[idx]; // используем полученный int как индекс массива-ключа
-		++ptr;
-		--size;
+	for (int i = 0; i < data.length(); i++)
+	{
+		idx = find_index(data[i]);
+		res += key[idx];
 	}
+
+	
+	//while (size) { // проходимся новым указателем по строке
+	//	idx = find_index(*data);
+	//	//idx = static_cast<int>(*ptr); // преобразуем unsigned char в int
+	//	res += key[idx]; // используем полученный int как индекс массива-ключа
+	//	++data;
+	//	--size;
+	//}
 
 	return res;
 }
