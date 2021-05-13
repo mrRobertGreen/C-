@@ -28,10 +28,6 @@ string Encoder::encode(string& data) {
 	string res = "";
 	unsigned char* ptr = reinterpret_cast<unsigned char*>(&data); // преобразуем указатель
 
-	/*cout << "sizeof (data[0]): " << sizeof(data[0]) << "\n";
-	cout << "sizeof (data): " << sizeof(data) << "\n";
-	cout << "data.capacity(): " << data.capacity() << "\n";*/
-
 	int size = sizeof(data);
 	int idx;
 	while (size) { // проходимся новым указателем по строке
@@ -58,5 +54,12 @@ bool Encoder::operator==(Encoder encoder) {
 }
 
 ostream& operator<<(ostream& os, Encoder encoder) {
-	
+	fstream file(encoder.get_filename());
+	char ch;
+	while (file >> ch) os << ch;
+	return os;
 }
+istream& operator>>(istream& is,Encoder& encoder) {
+	is >> encoder.filename; // самый логичный вариант - ввод нового файла
+	return is;
+};
