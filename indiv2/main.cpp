@@ -4,25 +4,22 @@
 using namespace std;
 
 int main() {
-	string filename = "test.txt";
-	string str = "password1234 \n abc";
+	string filename, str;
+	cout << "enter file name: ";
+	cin >> filename;
+	cout << "enter data: ";
+	cin.ignore();
+	getline(cin, str, '\n');
 	cout << "initial data: " << str << "\n";
 	Encoder encoder(filename);
-	
 	encoder << str;
 
 	ifstream file(filename);
-	char ch;
 	cout << "encoded data: ";
-	while (file >> ch)
-		cout << ch;
+	cout << encoder;
 	cout << "\n";
 
-	string decoded;
 	Decoder decoder = encoder.create_decoder();
-	decoder >> decoded;
-	cout << "decoded data: " << decoded << "\n";
-	cout << "---------------------" << "\n";
-	cout << decoder << "\n";
+	cout << "decoded data: " << decoder;
 	return EXIT_SUCCESS;
 }
