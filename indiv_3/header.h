@@ -17,7 +17,8 @@ private:
 	int m, n;
 	Array<Array<T>> data;
 
-	T determinant();
+	
+	
 public:
 	Matrix(int m = 1, int n = 1) : m(m), n(n), data(m) {
 		for (int i = 0; i < m; i++)
@@ -27,8 +28,11 @@ public:
 	int get_cols_count();
 	Matrix<T>& ones();
 	bool is_symmetric();
-	double algebraic_complement(int m = 1, int n = 1) {};
-	T operator()(int m, int n) {};
+	T algebraic_complement(int i = 1, int j = 1) const;
+	T determinant() const;
+	Matrix<T> minor(int i, int j) const;
+	T& operator()(int i, int j);
+	T operator()(int i, int j) const;
 	Matrix<T>& operator+(Matrix<T> other) {};
 	Matrix<T>& operator-(Matrix<T> other) {};
 	Matrix<T>& operator*(Matrix<T> other) {};
@@ -73,12 +77,51 @@ bool Matrix<T>::is_symmetric() {
 	return true;
 }
 template<typename T>
-T Matrix<T>::determinant() {
-	for (int i = 0; i < m; i++)
+Matrix<T> Matrix<T>::minor(int i, int j) const {
+	Matrix<T> minor = Matrix(this->m - 1, this->n - 1);
+	int minor_row = 0, minor_col;
+	for (int row = 0; row < this->m; row++)
 	{
-		for (int j = 0; j < n; j++)
-		{
-
+		if (row == i)
+			continue;
+		minor_col = 0;
+		for (int col = 0; col < this->n; col++)
+		{	
+			if (col == j)
+				continue;
+			minor(minor_row, minor_col) = data[row][col];
+			++minor_col;
 		}
+		++minor_row;
 	}
+	return minor;
+}
+template<typename T>
+T Matrix<T>::algebraic_complement(int i, int j) const {
+	return pow(-1, i + j) * this->minor(i, j).determinant();
+}
+template<typename T>
+T Matrix<T>::determinant() const {
+	T res = 0;
+	if (m == 1) {
+		return data[0][0];
+	}
+	if (m == 2) {
+		return data[0][0] * data[1][1] - data[0][1] * data[1][0];
+	}
+	for (int j = 0; j < n; j++)
+	{
+		T elem = data[0][j];
+		Matrix<T> minor = this->minor(0, j);
+		res += pow(-1, j) * minor.determinant();
+	}
+	return res;
+}
+template<typename T>
+T& Matrix<T>::operator()(int i, int j) {
+	return data[i][j];
+}
+template<typename T>
+T Matrix<T>::operator()(int i, int j) const {
+	return data[i][j];
 }

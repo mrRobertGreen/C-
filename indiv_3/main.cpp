@@ -15,9 +15,14 @@ int main() {
 	{
 		cerr << err.what();
 	}*/
-	cout << m1;
-	cout << m1.is_symmetric();
-		
+	for (int i = 0; i < m1.get_rows_count(); i++)
+		for (int j = 0; j < m1.get_cols_count(); j++)
+			m1(i, j) = i + j;
+
+	cout << m1 << "\n";
+	cout << m1.minor(1, 1) << "\n";
+	cout << m1.minor(1, 1).determinant() << "\n";
+	cout << m1.algebraic_complement(1, 2) << "\n";
 	
 
 	return EXIT_SUCCESS;
