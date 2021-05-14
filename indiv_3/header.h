@@ -16,9 +16,6 @@ class Matrix {
 private:
 	int m, n;
 	Array<Array<T>> data;
-
-	
-	
 public:
 	Matrix(int m = 1, int n = 1) : m(m), n(n), data(m) {
 		for (int i = 0; i < m; i++)
@@ -33,9 +30,9 @@ public:
 	Matrix<T> minor(int i, int j) const;
 	T& operator()(int i, int j);
 	T operator()(int i, int j) const;
-	Matrix<T>& operator+(Matrix<T> other) {};
-	Matrix<T>& operator-(Matrix<T> other) {};
-	Matrix<T>& operator*(Matrix<T> other) {};
+	Matrix<T> operator+(Matrix<T> other) const;
+	Matrix<T> operator-(Matrix<T> other) const;
+	Matrix<T> operator*(Matrix<T> other) const;
 	bool operator==(Matrix<T> other) {};
 	bool operator!=(Matrix<T> other) {};
 
@@ -86,7 +83,7 @@ Matrix<T> Matrix<T>::minor(int i, int j) const {
 			continue;
 		minor_col = 0;
 		for (int col = 0; col < this->n; col++)
-		{	
+		{
 			if (col == j)
 				continue;
 			minor(minor_row, minor_col) = data[row][col];
@@ -124,4 +121,34 @@ T& Matrix<T>::operator()(int i, int j) {
 template<typename T>
 T Matrix<T>::operator()(int i, int j) const {
 	return data[i][j];
+}
+template<typename T>
+Matrix<T> Matrix<T>::operator+(Matrix<T> other) const {
+	if (other.m != this->m || other.n != this->n)
+		throw exception("matrixes have different sizes");
+	Matrix<T> res = Matrix<T>(m, n);
+	for (int i = 0; i < m; i++)
+		for (int j = 0; j < n; j++)
+			res(i, j) = data[i][j] + other(i, j);
+	return res;
+}
+template<typename T>
+Matrix<T> Matrix<T>::operator-(Matrix<T> other) const {
+	if (other.m != this->m || other.n != this->n)
+		throw exception("matrixes have different sizes");
+	Matrix<T> res = Matrix<T>(m, n);
+	for (int i = 0; i < m; i++)
+		for (int j = 0; j < n; j++)
+			res(i, j) = data[i][j] - other(i, j);
+	return res;
+}
+template<typename T>
+Matrix<T> Matrix<T>::operator*(Matrix<T> other) const {
+	if (other.m != this->n || other.n != this->m)
+		throw exception("matrix's sizes are unsuitable for multiplication");
+	Matrix<T> res = Matrix<T>(m, n);
+	for (int i = 0; i < m; i++)
+		for (int j = 0; j < n; j++)
+			res(i, j) = data[i][j] * other(j, i);
+	return res;
 }

@@ -7,6 +7,7 @@ using namespace std;
 
 int main() {
 	Matrix<int> m1(3, 3);
+	Matrix<int> m2(3, 3);
 	/*try
 	{
 		cout << m1.ones();
@@ -19,10 +20,14 @@ int main() {
 		for (int j = 0; j < m1.get_cols_count(); j++)
 			m1(i, j) = i + j;
 
+	for (int i = 0; i < m2.get_rows_count(); i++)
+		for (int j = 0; j < m2.get_cols_count(); j++)
+			m2(i, j) = i - j;
+
 	cout << m1 << "\n";
-	cout << m1.minor(1, 1) << "\n";
-	cout << m1.minor(1, 1).determinant() << "\n";
-	cout << m1.algebraic_complement(1, 2) << "\n";
+	cout << m2 << "\n";
+	cout << m1 + m2 << "\n";
+	cout << m1 * m2 << "\n";
 	
 
 	return EXIT_SUCCESS;
