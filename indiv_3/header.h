@@ -24,6 +24,7 @@ public:
 	int get_rows_count();
 	int get_cols_count();
 	Matrix<T>& ones();
+	Matrix<T>& random();
 	bool is_symmetric();
 	T algebraic_complement(int i = 1, int j = 1) const;
 	T determinant() const;
@@ -33,8 +34,8 @@ public:
 	Matrix<T> operator+(Matrix<T> other) const;
 	Matrix<T> operator-(Matrix<T> other) const;
 	Matrix<T> operator*(Matrix<T> other) const;
-	bool operator==(Matrix<T> other) {};
-	bool operator!=(Matrix<T> other) {};
+	bool operator==(Matrix<T> other) const;
+	bool operator!=(Matrix<T> other) const;
 
 	friend ostream& operator<< <> (ostream& out, const Matrix<T> m);
 };
@@ -58,6 +59,13 @@ Matrix<T>& Matrix<T>::ones() {
 	return *this;
 }
 template<typename T>
+Matrix<T>& Matrix<T>::random() {
+	for (int i = 0; i < m; i++)
+		for (int j = 0; j < n; j++)
+			data[i][j] = rand() / 777.;
+	return *this;
+}
+template<typename T>
 ostream& operator << (ostream& out, const Matrix<T> matrix) {
 	for (int i = 0; i < matrix.m; i++)
 		out << matrix.data[i];
@@ -65,6 +73,8 @@ ostream& operator << (ostream& out, const Matrix<T> matrix) {
 }
 template<typename T>
 bool Matrix<T>::is_symmetric() {
+	if (m != n)
+		return false;
 	for (int i = 0; i < m; i++)
 		for (int j = 0; j < n; j++)
 		{
@@ -151,4 +161,20 @@ Matrix<T> Matrix<T>::operator*(Matrix<T> other) const {
 		for (int j = 0; j < n; j++)
 			res(i, j) = data[i][j] * other(j, i);
 	return res;
+}
+template<typename T>
+bool Matrix<T>::operator==(Matrix<T> other) const {
+	if (other.m != m || other.n != n)
+		return false;
+	for (int i = 0; i < m; i++)
+		for (int j = 0; j < n; j++)
+		{
+			if (other(i, j) != data[i][j])
+				return false;
+		}
+	return true;
+}
+template<typename T>
+bool Matrix<T>::operator!=(Matrix<T> other) const {
+	return !(*this == other);
 }
