@@ -32,7 +32,16 @@ int main() {
 	cout << "m1 * m2:\n" << m1 * m2 << "\n";
 	cout << "m1 == m2: " << (m1 == m2) << "\n";
 	cout << "m1 == m1: "<< (m1 == m1) << "\n";
-	cout << "m1 != m1: " << (m1 != m1) << "\n";*/
+	cout << "m1 != m1: " << (m1 != m1) << "\n";
+	try
+	{
+		cout << "m1.determinant(): " << m1.determinant() << "\n";
+	}
+	catch (const std::exception& err)
+	{
+		cerr << err.what();
+	}*/
+	
 
 	/* 
 	ЗАДАЧА

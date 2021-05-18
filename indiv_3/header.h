@@ -109,6 +109,8 @@ T Matrix<T>::algebraic_complement(int i, int j) const {
 }
 template<typename T>
 T Matrix<T>::determinant() const {
+	if (m != n)
+		throw exception("Determinant can't be calculated. Matrix isn't square.");
 	T res = 0;
 	if (m == 1) {
 		return data[0][0];
@@ -135,7 +137,7 @@ T Matrix<T>::operator()(int i, int j) const {
 template<typename T>
 Matrix<T> Matrix<T>::operator+(Matrix<T> other) const {
 	if (other.m != this->m || other.n != this->n)
-		throw exception("matrixes have different sizes");
+		throw exception("Matrixes have different sizes.");
 	Matrix<T> res = Matrix<T>(m, n);
 	for (int i = 0; i < m; i++)
 		for (int j = 0; j < n; j++)
@@ -145,7 +147,7 @@ Matrix<T> Matrix<T>::operator+(Matrix<T> other) const {
 template<typename T>
 Matrix<T> Matrix<T>::operator-(Matrix<T> other) const {
 	if (other.m != this->m || other.n != this->n)
-		throw exception("matrixes have different sizes");
+		throw exception("Matrixes have different sizes.");
 	Matrix<T> res = Matrix<T>(m, n);
 	for (int i = 0; i < m; i++)
 		for (int j = 0; j < n; j++)
@@ -155,7 +157,7 @@ Matrix<T> Matrix<T>::operator-(Matrix<T> other) const {
 template<typename T>
 Matrix<T> Matrix<T>::operator*(Matrix<T> other) const {
 	if (other.m != this->n || other.n != this->m)
-		throw exception("matrix's sizes are unsuitable for multiplication");
+		throw exception("Matrix's sizes are unsuitable for multiplication.");
 	Matrix<T> res = Matrix<T>(m, n);
 	for (int i = 0; i < m; i++)
 		for (int j = 0; j < n; j++)
