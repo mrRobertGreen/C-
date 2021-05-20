@@ -67,18 +67,27 @@ namespace indiv3tests
 		}
 		TEST_METHOD(operator_multiply_test)
 		{
-			Matrix<int> m1 = Matrix<int>(2, 2);
-			Matrix<int> m2 = Matrix<int>(2, 2).ones();
+			Matrix<int> m1 = Matrix<int>(3, 2);
+			Matrix<int> m2 = Matrix<int>(2, 3);
 			int k = 1;
 			for (int i = 0; i < m1.get_rows_count(); i++)
 				for (int j = 0; j < m1.get_cols_count(); j++)
 					m1(i, j) = k++;
+			k = 1;
+			for (int i = 0; i < m2.get_rows_count(); i++)
+				for (int j = 0; j < m2.get_cols_count(); j++)
+					m2(i, j) = k++;
 
-			Matrix<int> res = Matrix<int>(2, 2);
-			res(0, 0) = 1;
-			res(0, 1) = 0;
-			res(1, 0) = 0;
-			res(1, 1) = 4;
+			Matrix<int> res = Matrix<int>(3, 3);
+			res(0, 0) = 9;
+			res(0, 1) = 12;
+			res(0, 2) = 15;
+			res(1, 0) = 19;
+			res(1, 1) = 26;
+			res(1, 2) = 33;
+			res(2, 0) = 29;
+			res(2, 1) = 40;
+			res(2, 2) = 51;
 
 			Assert::IsTrue((m1 * m2) == res);
 		}

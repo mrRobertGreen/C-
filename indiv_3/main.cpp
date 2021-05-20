@@ -41,16 +41,24 @@ int main() {
 	{
 		cerr << err.what();
 	}*/
-	
 
-	/* 
+
+	/*
 	ЗАДАЧА
 	Используя матрицу вещественных чисел решить задачу: Даны две квадратные
 	матрицы. Найти их произведение и проверить, является ли оно симметричной
 	матрицей.
 	*/
-	Matrix<double> M1 = Matrix<double>(3, 3).random();
-	Matrix<double> M2 = Matrix<double>(3, 3).random();
+	Matrix<double> M1 = Matrix<double>(2, 2);
+	M1(0, 0) = 1;
+	M1(0, 1) = 2;
+	M1(1, 0) = 1;
+	M1(1, 1) = 2;
+	Matrix<double> M2 = Matrix<double>(2, 2);
+	M2(0, 0) = 2;
+	M2(0, 1) = 2;
+	M2(1, 0) = 1;
+	M2(1, 1) = 1;
 
 	cout << "M1:\n" << M1 << "\n";
 	cout << "M2:\n" << M2 << "\n";
@@ -59,7 +67,6 @@ int main() {
 
 	cout << "M3 = M1 * M2:\n" << M3 << "\n";
 	cout << "M3 is symmetric: " << (M3.is_symmetric() ? "true" : "false")<< "\n";
-
 
 	return EXIT_SUCCESS;
 }

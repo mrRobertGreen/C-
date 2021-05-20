@@ -156,12 +156,16 @@ Matrix<T> Matrix<T>::operator-(Matrix<T> other) const {
 }
 template<typename T>
 Matrix<T> Matrix<T>::operator*(Matrix<T> other) const {
-	if (other.m != this->n || other.n != this->m)
+	if (this->n != other.m)
 		throw exception("Matrix's sizes are unsuitable for multiplication.");
-	Matrix<T> res = Matrix<T>(m, n);
-	for (int i = 0; i < m; i++)
-		for (int j = 0; j < n; j++)
-			res(i, j) = data[i][j] * other(j, i);
+	Matrix<T> res = Matrix<T>(this->m, other.n);
+	for (int i = 0; i < this->m; i++)
+		for (int j = 0; j < other.n; j++)
+		{
+			for (int k = 0; k < this->n; k++)
+				res(i, j) += this->data[i][k] * other(k, j);
+		}
+
 	return res;
 }
 template<typename T>
