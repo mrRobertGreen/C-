@@ -18,14 +18,14 @@ private:
 	void add(node_ptr& t, int a);
 	void printLKR(node_ptr t, ostream& os) const;
 	void print(node_ptr t, ostream& os, int n = 0) const;
-	void copy(node_ptr t, node_ptr& newT)  const;
+	void copy(node_ptr source, node_ptr& destination)  const;
 	int nodes_count(node_ptr t)  const;
 	int leaves_count(node_ptr t)  const;
 	int depth(node_ptr t)  const;
 public:
 	Tree() : root(nullptr) {}
-	Tree(const Tree& t) {
-		copy(t.root, root);
+	Tree(const Tree& other) {
+		copy(other.root, root);
 	}
 	~Tree() {
 		del_tree(root);

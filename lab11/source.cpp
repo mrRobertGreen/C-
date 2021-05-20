@@ -63,13 +63,13 @@ int Tree::depth(node_ptr t)  const {
 		return 0;
 	}
 }
-void Tree::copy(node_ptr t, node_ptr& newT)  const //KLR
+void Tree::copy(node_ptr source, node_ptr& destination)  const //KLR
 {
-	if (t != nullptr)
+	if (source != nullptr)
 	{
-		newT = new TNode(t->data, nullptr, nullptr);
-		copy(t->lt, newT->lt);
-		copy(t->rt, newT->rt);
+		destination = new TNode(source->data, nullptr, nullptr);
+		copy(source->lt, destination->lt);
+		copy(source->rt, destination->rt);
 	}
-	else newT = nullptr;
+	else destination = nullptr;
 }
