@@ -12,9 +12,12 @@ void Tree::del_tree(node_ptr t) {
 	}
 }
 void Tree::add(node_ptr& t, int a) {
-	if (t == nullptr) t = new TNode(a);
-	else if (t->data > a) add(t->lt, a);
-	else add(t->rt, a);
+	if (t == nullptr)
+		t = new TNode(a);
+	else if (t->data > a)
+		add(t->lt, a);
+	else
+		add(t->rt, a);
 }
 void Tree::printLKR(node_ptr t, ostream& os) const {
 	if (t) {
@@ -72,4 +75,30 @@ void Tree::copy(node_ptr source, node_ptr& destination)  const //KLR
 		copy(source->rt, destination->rt);
 	}
 	else destination = nullptr;
+}
+bool Tree::is_equal(node_ptr t1, node_ptr t2) const {
+	if (t1 && t2)
+	{
+		if (t1->data != t2->data)
+			return false;
+		else return is_equal(t1->lt, t2->lt) && is_equal(t1->rt, t2->rt);
+	}
+	else
+		return (t1 == nullptr) && (t2 == nullptr);
+}
+void Tree::fill_in_width(node_ptr& t, int* arr, int len) {
+	for (int i = 0; i < len; i++)
+	{
+		print(t, cout);
+		add_in_width(t, arr[i]);
+	}
+}
+void Tree::add_in_width(node_ptr& t, int a) {
+	if (t == nullptr)
+		t = new TNode(a);
+	else if (depth(t->rt) > depth(t->lt))
+		add_in_width(t->lt, a);	
+	else {
+		add_in_width(t->rt, a);
+	}
 }
