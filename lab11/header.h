@@ -17,7 +17,9 @@ private:
 	void del_tree(node_ptr t);
 	void add(node_ptr& t, int a);
 	void fill_in_width(node_ptr& t, int* arr, int len);
-	void add_in_width(node_ptr& t, int a);
+	void fill_with_balance(node_ptr& t, int* arr, int len);
+	void add_in_width(node_ptr& t, int a, int i);
+	void add_with_balance(node_ptr& t, int a);
 	void printLKR(node_ptr t, ostream& os) const;
 	void print(node_ptr t, ostream& os, int n = 0) const;
 	void copy(node_ptr source, node_ptr& destination)  const;
@@ -45,8 +47,11 @@ public:
 	int rootDepth() {
 		return depth(root);
 	}
-	void filInWidth(int* arr, int len) {
+	void fillInWidth(int* arr, int len) {
 		return fill_in_width(root, arr, len);
+	}
+	void fillWithBalance(int* arr, int len) {
+		return fill_with_balance(root, arr, len);
 	}
 	Tree operator=(const Tree& other) {
 		copy(other.root, root);

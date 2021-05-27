@@ -1,4 +1,7 @@
 #include <iostream>
+#include <algorithm>
+#include <vector>
+#include <list>
 #include "header.h"
 
 using namespace std;
@@ -23,13 +26,14 @@ int main() {
 	cout << tree;
 	cout << (tree == tree2);
 	cout << "--------------\n";*/
+
 	int length = 10;
 	int* arr = new int[length];
 	for (int i = 0; i < length; i++)
 		arr[i] = i;
 	
 	Tree tree3 = Tree();
-	tree3.filInWidth(arr, length);
+	tree3.fillInWidth(arr, length);
 	cout << tree3;
 
 

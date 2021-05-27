@@ -89,16 +89,21 @@ bool Tree::is_equal(node_ptr t1, node_ptr t2) const {
 void Tree::fill_in_width(node_ptr& t, int* arr, int len) {
 	for (int i = 0; i < len; i++)
 	{
-		print(t, cout);
-		add_in_width(t, arr[i]);
+		add_in_width(t, arr[i], i);
 	}
 }
-void Tree::add_in_width(node_ptr& t, int a) {
+void Tree::add_in_width(node_ptr& t, int a, int i) {
 	if (t == nullptr)
 		t = new TNode(a);
 	else if (depth(t->rt) > depth(t->lt))
-		add_in_width(t->lt, a);	
+		add_in_width(t->lt, a, i);	
 	else {
-		add_in_width(t->rt, a);
+		add_in_width(t->rt, a, i);
 	}
+}
+void Tree::fill_with_balance(node_ptr& t, int* arr, int len) {
+	
+}
+void Tree::add_with_balance(node_ptr& t, int a) {
+
 }
